@@ -1,0 +1,44 @@
+<!-- Navbar -->
+<header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4 bg-black/60 backdrop-blur-md border-b border-white/10">
+  <span class="text-white text-xl font-bold tracking-wide">StockSight</span>
+  <nav class="flex items-center gap-8">
+    <a href="#" class="text-sm text-gray-300 hover:text-white transition-colors">Dashboard</a>
+    <a href="#" class="text-sm text-gray-300 hover:text-white transition-colors">Pricing</a>
+    <a href="#" class="text-sm text-gray-300 hover:text-white transition-colors">Help</a>
+  </nav>
+</header>
+
+<!-- Hero -->
+<main class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 px-4 relative overflow-hidden">
+
+  <!-- Glow backdrop -->
+  <div class="absolute w-[600px] h-[600px] rounded-full bg-blue-600/10 blur-3xl pointer-events-none"></div>
+
+  <div class="relative z-10 flex flex-col items-center text-center gap-8 max-w-3xl w-full">
+
+    <!-- Headline -->
+    <h1 class="text-5xl sm:text-6xl md:text-7xl font-extrabold text-white leading-tight tracking-tight">
+      See Beyond <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">the Noise</span>
+    </h1>
+
+    <p class="text-gray-400 text-lg sm:text-xl max-w-xl">
+      Ask anything about stocks and get realistic responses grounded in actual SEC data.
+    </p>
+
+    <!-- Search bar -->
+    <div class="w-full max-w-2xl flex items-center bg-white/5 border border-white/15 rounded-2xl px-5 py-4 gap-3 shadow-lg hover:border-blue-500/50 focus-within:border-blue-500 transition-colors">
+      <svg class="w-5 h-5 text-gray-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input
+        type="text"
+        placeholder="Ask about a stock or market trend..."
+        class="flex-1 bg-transparent text-white placeholder-gray-500 text-base outline-none"
+      />
+      <button class="shrink-0 bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium px-5 py-2 rounded-xl transition-colors">
+        Ask
+      </button>
+    </div>
+
+  </div>
+</main>

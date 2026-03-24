@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm --version)",
+      "Bash(npx @angular/cli version)",
+      "Bash(npx:*)",
+      "Bash(npm run:*)",
+      "Bash(grep -c \"font-extrabold\\\\|from-gray-950\\\\|backdrop-blur\" dist/stocksight-ui/browser/styles-*.css)",
+      "Bash(grep -r postcss node_modules/@angular-devkit/build-angular/src/tools/esbuild/ --include=*.js -l)",
+      "Bash(npm list:*)",
+      "Bash(npm install:*)",
+      "WebFetch(domain:en.wikipedia.org)",
+      "Bash(curl -s \"https://en.wikipedia.org/api/rest_v1/page/summary/Nvidia\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(d.get\\(''''thumbnail'''',{}\\).get\\(''''source'''',''''''''\\), d.get\\(''''originalimage'''',{}\\).get\\(''''source'''',''''''''\\)\\)\")",
+      "Bash(curl -s \"https://en.wikipedia.org/api/rest_v1/page/summary/Microsoft\")",
+      "Bash(curl -s \"https://en.wikipedia.org/api/rest_v1/page/summary/Apple_Inc.\")",
+      "Bash(curl -s \"https://en.wikipedia.org/api/rest_v1/page/summary/Alphabet_Inc.\")",
+      "Bash(curl -s \"https://en.wikipedia.org/api/rest_v1/page/summary/Amazon_\\(company\\)\")",
+      "Bash(curl -s \"https://en.wikipedia.org/api/rest_v1/page/summary/Tesla,_Inc.\")",
+      "Bash(curl -s \"https://en.wikipedia.org/api/rest_v1/page/summary/Meta_Platforms\")",
+      "Bash(curl -s \"https://en.wikipedia.org/api/rest_v1/page/summary/JPMorgan_Chase\")",
+      "Bash(curl -s \"https://en.wikipedia.org/w/api.php?action=query&titles=Nvidia&prop=pageimages&piprop=original|name&format=json\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); pages=d[''''query''''][''''pages'''']; [print\\(p.get\\(''''pageimage'''',''''''''\\), p.get\\(''''original'''',{}\\).get\\(''''source'''',''''''''\\)\\) for p in pages.values\\(\\)]\")",
+      "WebFetch(domain:commons.wikimedia.org)",
+      "WebSearch",
+      "Bash(python3:*)",
+      "WebFetch(domain:upload.wikimedia.org)"
+    ]
+  }
+}

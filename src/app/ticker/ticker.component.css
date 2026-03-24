@@ -1,0 +1,17 @@
+.logo-white {
+  filter: brightness(0) invert(1);
+  opacity: 0.8;
+}
+
+.ticker-track {
+  animation: marquee 20s linear infinite;
+}
+
+.ticker-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
