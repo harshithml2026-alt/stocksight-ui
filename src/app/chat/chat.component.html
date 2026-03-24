@@ -113,8 +113,17 @@
           <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shrink-0 text-white text-xs font-bold">
             S
           </div>
-          <div class="max-w-[75%] bg-white/5 border border-white/10 text-gray-200 text-sm px-5 py-3 rounded-2xl rounded-tl-sm shadow-lg prose prose-invert prose-sm max-w-none">
-            <markdown [data]="msg.text" />
+          <div class="max-w-[75%] flex flex-col gap-1">
+            <div class="bg-white/5 border border-white/10 text-gray-200 text-sm px-5 py-3 rounded-2xl rounded-tl-sm shadow-lg prose prose-invert prose-sm max-w-none">
+              <markdown [data]="msg.text" />
+            </div>
+            <div *ngIf="msg.metrics" class="flex items-center gap-2 px-1 text-[11px] text-white/25 font-mono select-none">
+              <span>{{ msg.metrics.total_tokens }} tokens</span>
+              <span>·</span>
+              <span>{{ msg.metrics.inference_time_sec }}s</span>
+              <span>·</span>
+              <span>{{ msg.metrics.tokens_per_sec }} tok/s</span>
+            </div>
           </div>
         </div>
       </ng-container>
@@ -137,8 +146,8 @@
 </div>
 
 <!-- Input bar -->
-<div class="fixed bottom-0 z-50 bg-gray-950/90 backdrop-blur-md border-t border-white/10 px-4 py-4 transition-all duration-300"
-  [class.left-64]="sidebarOpen" [class.left-0]="!sidebarOpen" style="right:0">
+<div class="fixed bottom-0 left-0 right-0 z-50 bg-gray-950/90 backdrop-blur-md border-t border-white/10 px-4 py-4 transition-all duration-300"
+  [class.sm:left-64]="sidebarOpen">
   <div class="max-w-3xl mx-auto flex items-center gap-3 bg-white/5 border border-white/15 rounded-2xl px-5 py-3 focus-within:border-blue-500 transition-colors">
     <textarea
       rows="1"

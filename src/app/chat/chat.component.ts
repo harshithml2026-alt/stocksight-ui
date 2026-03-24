@@ -6,9 +6,18 @@ import { skip } from 'rxjs';
 import { MarkdownComponent } from 'ngx-markdown';
 import { SessionService, Session } from '../services/session.service';
 
+interface Metrics {
+  total_tokens: number;
+  prompt_tokens: number;
+  completion_tokens: number;
+  inference_time_sec: number;
+  tokens_per_sec: number;
+}
+
 interface Message {
   role: 'user' | 'ai';
   text: string;
+  metrics?: Metrics;
 }
 
 @Component({
@@ -110,7 +119,7 @@ export class ChatComponent implements OnInit {
             this.loadSessions();
           }
           this.isTyping = false;
-          this.messages.push({ role: 'ai', text: res.answer });
+          this.messages.push({ role: 'ai', text: res.answer, metrics: res.metrics ?? undefined });
           this.scrollToBottom();
         },
         error: () => {

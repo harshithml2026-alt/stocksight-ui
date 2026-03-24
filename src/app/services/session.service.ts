@@ -20,10 +20,19 @@ export interface SessionDetail extends Session {
   messages: ChatMessage[];
 }
 
+export interface Metrics {
+  total_tokens: number;
+  prompt_tokens: number;
+  completion_tokens: number;
+  inference_time_sec: number;
+  tokens_per_sec: number;
+}
+
 export interface ChatResponse {
   session_id: string;
   answer: string;
   sources: any[];
+  metrics?: Metrics;
 }
 
 const API = 'http://localhost:8000';
