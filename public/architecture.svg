@@ -67,7 +67,7 @@
   <text x="652" y="198" text-anchor="middle" font-size="10" font-weight="600" fill="#ffbb70">semantic search</text>
 
   <!-- VectorDB → LlamaIndex (context chunks, lower lane) -->
-  <line x1="700" y1="228" x2="608" y2="245" stroke="#ffa04a" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arr-orange)"/>
+  <line x1="700" y1="228" x2="608" y2="245" stroke="#ffa04a" stroke-width="2" marker-end="url(#arr-orange)"/>
   <text x="652" y="258" text-anchor="middle" font-size="10" font-weight="600" fill="#ffbb70">context chunks</text>
 
   <!-- LlamaIndex → LLM (grounded prompt) -->
