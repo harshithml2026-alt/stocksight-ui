@@ -1,0 +1,27 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://excalidraw.com",
+  "appState": {
+    "viewBackgroundColor": "#0f0f0f"
+  },
+  "elements": [
+    {"type":"rectangle","id":"browser","x":60,"y":200,"width":180,"height":80,"backgroundColor":"#1e3a5f","strokeColor":"#4a9eff","fillStyle":"solid","roughness":1,"roundness":{"type":3},"label":{"text":"Angular 19 UI\n(Browser)","fontSize":14,"fontFamily":1,"textAlign":"center","verticalAlign":"middle","color":"#e0f0ff"}},
+    {"type":"rectangle","id":"session-svc","x":60,"y":340,"width":180,"height":60,"backgroundColor":"#1a2f4a","strokeColor":"#4a9eff","fillStyle":"solid","roughness":1,"roundness":{"type":3},"label":{"text":"SessionService\n(HttpClient)","fontSize":12,"fontFamily":1,"textAlign":"center","verticalAlign":"middle","color":"#a0c8f0"}},
+    {"type":"arrow","id":"a1","x":150,"y":280,"points":[[0,0],[0,60]],"strokeColor":"#4a9eff","strokeWidth":2,"roughness":1,"startArrowhead":null,"endArrowhead":"arrow"},
+    {"type":"rectangle","id":"fastapi","x":320,"y":260,"width":180,"height":80,"backgroundColor":"#1e4a2f","strokeColor":"#4aff88","fillStyle":"solid","roughness":1,"roundness":{"type":3},"label":{"text":"FastAPI Backend\nlocalhost:8000","fontSize":14,"fontFamily":1,"textAlign":"center","verticalAlign":"middle","color":"#d0ffe0"}},
+    {"type":"arrow","id":"a2","x":240,"y":370,"points":[[0,0],[80,-70]],"strokeColor":"#4a9eff","strokeWidth":2,"roughness":1,"startArrowhead":null,"endArrowhead":"arrow","label":{"text":"POST /chat/message\nGET /chat/sessions","fontSize":10,"fontFamily":1,"color":"#88ccff"}},
+    {"type":"rectangle","id":"rag","x":560,"y":180,"width":180,"height":80,"backgroundColor":"#3a2a1e","strokeColor":"#ffa04a","fillStyle":"solid","roughness":1,"roundness":{"type":3},"label":{"text":"RAG Pipeline\n(Vector Store)","fontSize":14,"fontFamily":1,"textAlign":"center","verticalAlign":"middle","color":"#ffe0c0"}},
+    {"type":"arrow","id":"a3","x":500,"y":300,"points":[[0,0],[60,-40]],"strokeColor":"#ffa04a","strokeWidth":2,"roughness":1,"startArrowhead":null,"endArrowhead":"arrow","label":{"text":"semantic search","fontSize":10,"fontFamily":1,"color":"#ffc080"}},
+    {"type":"rectangle","id":"llm","x":560,"y":340,"width":180,"height":80,"backgroundColor":"#2a1e3a","strokeColor":"#c04aff","fillStyle":"solid","roughness":1,"roundness":{"type":3},"label":{"text":"LLM\n(Claude / GPT)","fontSize":14,"fontFamily":1,"textAlign":"center","verticalAlign":"middle","color":"#f0d0ff"}},
+    {"type":"arrow","id":"a4","x":500,"y":300,"points":[[0,0],[60,40]],"strokeColor":"#c04aff","strokeWidth":2,"roughness":1,"startArrowhead":null,"endArrowhead":"arrow","label":{"text":"grounded prompt","fontSize":10,"fontFamily":1,"color":"#d888ff"}},
+    {"type":"rectangle","id":"sec","x":560,"y":60,"width":180,"height":80,"backgroundColor":"#2a1e1e","strokeColor":"#ff6060","fillStyle":"solid","roughness":1,"roundness":{"type":3},"label":{"text":"SEC EDGAR\n10-K / 10-Q / 8-K","fontSize":14,"fontFamily":1,"textAlign":"center","verticalAlign":"middle","color":"#ffd0d0"}},
+    {"type":"arrow","id":"a5","x":650,"y":180,"points":[[0,0],[0,-40]],"strokeColor":"#ff6060","strokeWidth":2,"roughness":1,"startArrowhead":null,"endArrowhead":"arrow","label":{"text":"indexed filings","fontSize":10,"fontFamily":1,"color":"#ff9090"}},
+    {"type":"rectangle","id":"db","x":320,"y":420,"width":180,"height":80,"backgroundColor":"#2a2a1e","strokeColor":"#ffdd4a","fillStyle":"solid","roughness":1,"roundness":{"type":3},"label":{"text":"Session DB\n(IP-based history)","fontSize":14,"fontFamily":1,"textAlign":"center","verticalAlign":"middle","color":"#fff0a0"}},
+    {"type":"arrow","id":"a6","x":410,"y":340,"points":[[0,0],[0,80]],"strokeColor":"#ffdd4a","strokeWidth":2,"roughness":1,"startArrowhead":null,"endArrowhead":"arrow","label":{"text":"persist sessions","fontSize":10,"fontFamily":1,"color":"#ffdd88"}},
+    {"type":"text","id":"t1","x":60,"y":150,"text":"StockSight Architecture","fontSize":22,"fontFamily":1,"textAlign":"left","color":"#ffffff","fontWeight":"bold"},
+    {"type":"text","id":"t2","x":60,"y":180,"text":"Angular 19 · FastAPI · RAG · SEC EDGAR","fontSize":12,"fontFamily":1,"textAlign":"left","color":"#888888"},
+    {"type":"rectangle","id":"render","x":320,"y":140,"width":180,"height":40,"backgroundColor":"#0d1f2d","strokeColor":"#336688","fillStyle":"solid","roughness":1,"roundness":{"type":3},"label":{"text":"Render.com (deployed)","fontSize":11,"fontFamily":1,"textAlign":"center","verticalAlign":"middle","color":"#6699aa"}},
+    {"type":"arrow","id":"a7","x":410,"y":260,"points":[[0,0],[0,-80]],"strokeColor":"#336688","strokeWidth":1,"strokeStyle":"dashed","roughness":1,"startArrowhead":null,"endArrowhead":"arrow"}
+  ]
+}
