@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { TickerComponent } from '../ticker/ticker.component';
 
 @Component({
   selector: 'app-home',
-  imports: [FormsModule, TickerComponent],
+  imports: [FormsModule, RouterLink, TickerComponent],
   templateUrl: './home.component.html',
 })
 export class HomeComponent {
