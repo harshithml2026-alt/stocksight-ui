@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { NgFor, NgIf, DatePipe, Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { skip } from 'rxjs';
+import { MarkdownComponent } from 'ngx-markdown';
 import { SessionService, Session } from '../services/session.service';
 
 interface Message {
@@ -12,7 +13,7 @@ interface Message {
 
 @Component({
   selector: 'app-chat',
-  imports: [FormsModule, NgFor, NgIf, DatePipe],
+  imports: [FormsModule, NgFor, NgIf, DatePipe, MarkdownComponent],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css',
 })

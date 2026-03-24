@@ -113,8 +113,8 @@
           <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shrink-0 text-white text-xs font-bold">
             S
           </div>
-          <div class="max-w-[75%] bg-white/5 border border-white/10 text-gray-200 text-sm px-5 py-3 rounded-2xl rounded-tl-sm shadow-lg">
-            {{ msg.text }}
+          <div class="max-w-[75%] bg-white/5 border border-white/10 text-gray-200 text-sm px-5 py-3 rounded-2xl rounded-tl-sm shadow-lg prose prose-invert prose-sm max-w-none">
+            <markdown [data]="msg.text" />
           </div>
         </div>
       </ng-container>
