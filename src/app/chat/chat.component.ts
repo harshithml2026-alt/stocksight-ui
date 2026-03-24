@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgFor, NgIf, DatePipe, Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { skip } from 'rxjs';
 import { SessionService, Session } from '../services/session.service';
 
 interface Message {
@@ -43,10 +44,12 @@ export class ChatComponent implements OnInit {
     if (initialQuery) {
       this.sessionId = '';
       this.sendQuestion(initialQuery);
+    } else if (this.sessionId) {
+      this.loadSessionMessages();
     }
 
-    // React to session changes when navigating between sessions
-    this.route.paramMap.subscribe(params => {
+    // React to session changes when navigating between sessions (skip initial emission)
+    this.route.paramMap.pipe(skip(1)).subscribe(params => {
       const id = params.get('id') ?? '';
       if (id && id !== this.sessionId) {
         this.sessionId = id;
