@@ -1,18 +1,213 @@
 <!-- Navbar -->
 <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4 bg-black/60 backdrop-blur-md border-b border-white/10">
-  <span class="text-white text-xl font-bold tracking-wide">StockSight <span class="text-xs text-gray-500 font-normal ml-1">Admin</span></span>
+  <span class="text-white text-xl font-bold tracking-wide">
+    StockSight <span class="text-xs text-gray-500 font-normal ml-2">Admin</span>
+  </span>
 </header>
 
-<!-- Content -->
-<main class="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 flex flex-col items-center justify-center px-4">
-  <div class="flex flex-col items-center gap-4 text-center">
-    <div class="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
-      <svg class="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z"/>
-        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
-      </svg>
+<main class="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 pt-20 px-8 pb-12">
+
+  <!-- Stats -->
+  <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8" *ngIf="stats">
+    <div class="bg-white/5 border border-white/10 rounded-2xl px-5 py-4">
+      <p class="text-gray-500 text-xs mb-1">Total Sessions</p>
+      <p class="text-white text-2xl font-bold">{{ stats.total_sessions }}</p>
     </div>
-    <h1 class="text-2xl font-bold text-white">Admin Panel</h1>
-    <p class="text-gray-500 text-sm">Coming soon — management tools will appear here.</p>
+    <div class="bg-white/5 border border-white/10 rounded-2xl px-5 py-4">
+      <p class="text-gray-500 text-xs mb-1">Unique IPs</p>
+      <p class="text-blue-400 text-2xl font-bold">{{ stats.total_ips }}</p>
+    </div>
+    <div class="bg-white/5 border border-white/10 rounded-2xl px-5 py-4">
+      <p class="text-gray-500 text-xs mb-1">Active Sessions</p>
+      <p class="text-green-400 text-2xl font-bold">{{ stats.active_sessions }}</p>
+    </div>
+    <div class="bg-white/5 border border-white/10 rounded-2xl px-5 py-4">
+      <p class="text-gray-500 text-xs mb-1">Archived</p>
+      <p class="text-gray-400 text-2xl font-bold">{{ stats.archived_sessions }}</p>
+    </div>
+  </div>
+
+  <div class="flex gap-6">
+
+    <!-- IP Table -->
+    <div class="flex-1 min-w-0">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-white font-semibold text-sm">Sessions by IP</h2>
+        <span class="text-gray-500 text-xs">{{ ipTotal }} unique IPs</span>
+      </div>
+
+      <div class="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+
+        <!-- Loading -->
+        <div *ngIf="ipLoading" class="flex items-center justify-center py-16 text-gray-500 text-sm">
+          Loading...
+        </div>
+
+        <!-- Table -->
+        <table *ngIf="!ipLoading" class="w-full text-sm">
+          <thead>
+            <tr class="border-b border-white/10 text-gray-500 text-xs uppercase tracking-wide">
+              <th class="text-left px-5 py-3">IP Address</th>
+              <th class="text-left px-5 py-3">Location</th>
+              <th class="text-right px-5 py-3">Sessions</th>
+              <th class="text-right px-5 py-3">First Seen</th>
+              <th class="text-right px-5 py-3">Last Active</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let row of ips"
+              (click)="selectIp(row.ip_address)"
+              class="border-b border-white/5 cursor-pointer transition-colors hover:bg-white/5"
+              [ngClass]="selectedIp === row.ip_address ? 'bg-blue-600/10 border-blue-500/20' : ''"
+            >
+              <td class="px-5 py-3 font-mono text-blue-300">{{ row.ip_address }}</td>
+              <td class="px-5 py-3 text-gray-300 text-sm">
+                <span *ngIf="locationMap[row.ip_address]">{{ locationMap[row.ip_address] }}</span>
+                <span *ngIf="!locationMap[row.ip_address]" class="text-gray-600 text-xs">resolving...</span>
+              </td>
+              <td class="px-5 py-3 text-right text-white font-medium">{{ row.session_count }}</td>
+              <td class="px-5 py-3 text-right text-gray-400">{{ formatDate(row.first_seen) }}</td>
+              <td class="px-5 py-3 text-right text-gray-400">{{ timeAgo(row.last_active) }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Empty -->
+        <div *ngIf="!ipLoading && ips.length === 0" class="text-center py-16 text-gray-500 text-sm">
+          No sessions found.
+        </div>
+      </div>
+
+      <!-- IP Pagination -->
+      <div class="flex items-center justify-between mt-3 px-1">
+        <span class="text-gray-500 text-xs">Page {{ ipPage }} of {{ ipTotalPages }}</span>
+        <div class="flex gap-2">
+          <button
+            (click)="ipPageChange(-1)"
+            [disabled]="ipPage === 1"
+            class="px-3 py-1.5 rounded-lg text-xs bg-white/5 border border-white/10 text-gray-300 hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          >← Prev</button>
+          <button
+            (click)="ipPageChange(1)"
+            [disabled]="ipPage === ipTotalPages"
+            class="px-3 py-1.5 rounded-lg text-xs bg-white/5 border border-white/10 text-gray-300 hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          >Next →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sessions Panel -->
+    <div class="w-96 shrink-0" *ngIf="selectedIp">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-white font-semibold text-sm truncate">
+          <span class="text-gray-500 font-normal">Sessions for </span>
+          <span class="font-mono text-blue-300">{{ selectedIp }}</span>
+        </h2>
+        <button (click)="selectIp(selectedIp)" class="text-gray-500 hover:text-white transition-colors text-lg leading-none">×</button>
+      </div>
+
+      <div class="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+
+        <div *ngIf="sessionLoading" class="flex items-center justify-center py-12 text-gray-500 text-sm">
+          Loading...
+        </div>
+
+        <div *ngIf="!sessionLoading" class="divide-y divide-white/5">
+          <div
+            *ngFor="let s of sessions"
+            (click)="openSession(s.id)"
+            class="px-4 py-3 hover:bg-white/5 transition-colors cursor-pointer"
+          >
+            <div class="flex items-start justify-between gap-2 mb-1">
+              <p class="text-gray-200 text-xs leading-relaxed line-clamp-2 flex-1">{{ s.preview }}</p>
+              <span
+                *ngIf="s.isArchived"
+                class="shrink-0 text-[10px] bg-white/10 text-gray-400 px-1.5 py-0.5 rounded-md"
+              >archived</span>
+            </div>
+            <p class="text-gray-600 text-[11px]">{{ timeAgo(s.updatedAt) }} · {{ formatDate(s.createdAt) }}</p>
+          </div>
+
+          <div *ngIf="sessions.length === 0" class="text-center py-12 text-gray-500 text-sm">
+            No sessions.
+          </div>
+        </div>
+      </div>
+
+      <!-- Session Pagination -->
+      <div class="flex items-center justify-between mt-3 px-1">
+        <span class="text-gray-500 text-xs">Page {{ sessionPage }} of {{ sessionTotalPages }} · {{ sessionTotal }} total</span>
+        <div class="flex gap-2">
+          <button
+            (click)="sessionPageChange(-1)"
+            [disabled]="sessionPage === 1"
+            class="px-3 py-1.5 rounded-lg text-xs bg-white/5 border border-white/10 text-gray-300 hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          >← Prev</button>
+          <button
+            (click)="sessionPageChange(1)"
+            [disabled]="sessionPage === sessionTotalPages"
+            class="px-3 py-1.5 rounded-lg text-xs bg-white/5 border border-white/10 text-gray-300 hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          >Next →</button>
+        </div>
+      </div>
+    </div>
+
   </div>
 </main>
+
+<!-- Session Chat Modal -->
+<div
+  *ngIf="openedSession || sessionDetailLoading"
+  class="fixed inset-0 z-50 flex items-center justify-center px-4"
+  (click)="closeSession()"
+>
+  <!-- Backdrop -->
+  <div class="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+
+  <!-- Panel -->
+  <div
+    class="relative z-10 w-full max-w-2xl max-h-[85vh] bg-gray-900 border border-white/10 rounded-2xl flex flex-col shadow-2xl"
+    (click)="$event.stopPropagation()"
+  >
+    <!-- Header -->
+    <div class="flex items-center justify-between px-5 py-4 border-b border-white/10 shrink-0">
+      <div class="flex flex-col gap-0.5 min-w-0">
+        <p class="text-white text-sm font-medium truncate">{{ openedSession?.preview }}</p>
+        <p class="text-gray-500 text-xs font-mono">{{ openedSession?.ip_address }} · {{ openedSession ? formatDate(openedSession.createdAt) : '' }}</p>
+      </div>
+      <button (click)="closeSession()" class="text-gray-500 hover:text-white transition-colors text-xl leading-none ml-4 shrink-0">×</button>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="sessionDetailLoading" class="flex items-center justify-center py-16 text-gray-500 text-sm">
+      Loading...
+    </div>
+
+    <!-- Messages -->
+    <div *ngIf="openedSession && !sessionDetailLoading" class="flex-1 overflow-y-auto px-5 py-4 flex flex-col gap-4">
+
+      <div *ngIf="openedSession.messages.length === 0" class="text-center text-gray-500 text-sm py-8">
+        No messages in this session.
+      </div>
+
+      <div *ngFor="let msg of openedSession.messages" class="flex" [ngClass]="msg.role === 'user' ? 'justify-end' : 'justify-start'">
+        <div
+          class="max-w-[80%] px-4 py-3 rounded-2xl text-sm"
+          [ngClass]="msg.role === 'user'
+            ? 'bg-blue-600 text-white rounded-br-sm'
+            : 'bg-white/5 border border-white/10 text-gray-200 rounded-bl-sm'"
+        >
+          <div *ngIf="msg.role === 'user'">{{ msg.content }}</div>
+          <markdown *ngIf="msg.role === 'assistant'" [data]="msg.content" class="prose prose-invert prose-sm max-w-none" />
+          <p class="text-[10px] mt-1.5 opacity-40">{{ msg.timestamp | date:'short' }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Read-only footer -->
+    <div class="px-5 py-3 border-t border-white/10 shrink-0">
+      <p class="text-center text-gray-600 text-xs">Read-only view · {{ openedSession?.messages?.length ?? 0 }} messages</p>
+    </div>
+  </div>
+</div>
