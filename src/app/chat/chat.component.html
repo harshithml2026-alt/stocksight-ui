@@ -126,14 +126,9 @@
             </div>
             <!-- SEC Sources -->
             <div *ngIf="msg.sources && msg.sources.length > 0"
-              class="mt-1 bg-white/[0.04] border border-white/[0.07] rounded-xl px-3 py-2.5 flex flex-col gap-1.5">
-              <p class="text-[10px] text-white/30 uppercase tracking-widest font-medium">SEC Sources</p>
-              <div class="flex flex-col gap-1">
-                <div *ngFor="let src of msg.sources" class="flex items-center justify-between gap-3">
-                  <span class="text-[11px] text-white/50 leading-relaxed">{{ formatSource(src) }}</span>
-                  <span class="text-[10px] text-white/25 font-mono shrink-0">{{ (src.score * 100).toFixed(0) }}%</span>
-                </div>
-              </div>
+              class="mt-1 bg-white/[0.04] border border-white/[0.07] rounded-xl px-3 py-2 flex items-center gap-2 min-w-0">
+              <span class="text-[10px] text-white/30 uppercase tracking-widest font-medium shrink-0">Sources</span>
+              <span class="text-[11px] text-white/40 font-mono truncate">{{ formatSources(msg.sources) }}</span>
             </div>
 
             <div *ngIf="msg.metrics" class="flex items-center gap-2 px-1 text-[11px] text-white/25 font-mono select-none">

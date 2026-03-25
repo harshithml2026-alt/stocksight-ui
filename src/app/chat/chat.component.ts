@@ -175,14 +175,22 @@ export class ChatComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
-  formatSource(source: Source): string {
-    const m = source.metadata;
-    const ticker   = m['ticker'] || m['company'] || '';
-    const filing   = m['filing_type'] || m['form_type'] || '';
-    const period   = m['period_of_report'] || m['date'] || '';
-    const section  = m['section'] || '';
-    const parts = [ticker, filing, period, section].filter(Boolean);
-    return parts.length ? parts.join(' · ') : source.id;
+  formatSources(sources: Source[]): string {
+    const seen = new Set<string>();
+    const parts: string[] = [];
+    for (const src of sources) {
+      const m = src.metadata;
+      const ticker  = m['ticker'] || m['company'] || '';
+      const filing  = m['filing_type'] || m['form_type'] || '';
+      const rawDate = m['period_of_report'] || m['date'] || '';
+      const year    = rawDate ? rawDate.toString().slice(0, 4) : '';
+      const label   = [ticker, filing, year].filter(Boolean).join(' ');
+      if (label && !seen.has(label)) {
+        seen.add(label);
+        parts.push(label);
+      }
+    }
+    return parts.join(' | ');
   }
 
   private scrollToBottom() {
