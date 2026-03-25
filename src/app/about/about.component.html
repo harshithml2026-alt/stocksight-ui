@@ -45,19 +45,25 @@
     <!-- Diagram lightbox -->
     @if (diagramOpen) {
       <div
-        class="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center"
+        class="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center overflow-hidden touch-none"
         (click)="closeDiagram()"
         (wheel)="onWheel($event)"
+        (touchstart)="onTouchStart($event)"
+        (touchmove)="onTouchMove($event)"
+        (touchend)="onTouchEnd()"
       >
-        <button class="absolute top-4 right-5 text-white/60 hover:text-white text-3xl leading-none" (click)="closeDiagram()">&#x2715;</button>
-        <img
-          src="architecture.svg"
-          alt="StockSight Architecture Diagram"
-          class="max-w-none select-none"
-          [style.transform]="'scale(' + zoom + ')'"
-          [style.transition]="'transform 0.15s ease'"
-          (click)="$event.stopPropagation()"
-        />
+        <button class="absolute top-4 right-5 text-white/60 hover:text-white text-3xl leading-none z-10" (click)="closeDiagram()">&#x2715;</button>
+        <div class="w-full h-full flex items-center justify-center overflow-auto">
+          <img
+            src="architecture.svg"
+            alt="StockSight Architecture Diagram"
+            class="select-none max-w-full max-h-full object-contain"
+            [style.transform]="'scale(' + zoom + ')'"
+            [style.transform-origin]="'center center'"
+            [style.transition]="isPinching ? 'none' : 'transform 0.15s ease'"
+            (click)="$event.stopPropagation()"
+          />
+        </div>
       </div>
     }
 
