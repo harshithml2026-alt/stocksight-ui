@@ -2,8 +2,6 @@
 <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4 bg-black/60 backdrop-blur-md border-b border-white/10">
   <button (click)="goHome()" class="text-white text-xl font-bold tracking-wide hover:text-blue-400 transition-colors">StockSight</button>
   <nav class="flex items-center gap-8">
-    <a href="#" class="text-sm text-gray-300 hover:text-white transition-colors">Dashboard</a>
-    <a href="#" class="text-sm text-gray-300 hover:text-white transition-colors">Help</a>
     <a routerLink="/about" class="text-sm text-white font-medium transition-colors">About</a>
   </nav>
 </header>
@@ -25,7 +23,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
       <div class="bg-white/5 border border-white/10 rounded-2xl px-5 py-5 flex flex-col gap-2">
         <span class="text-blue-400 text-lg font-bold">SEC Grounded</span>
-        <p class="text-gray-400 text-sm">Every answer is backed by actual SEC filings — 10-Ks, 10-Qs, 8-Ks, and more.</p>
+        <p class="text-gray-400 text-sm">SEC EDGAR is the U.S. government's public database of financial disclosures.</p>
       </div>
       <div class="bg-white/5 border border-white/10 rounded-2xl px-5 py-5 flex flex-col gap-2">
         <span class="text-blue-400 text-lg font-bold">No Noise</span>
