@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, DatePipe, NgClass } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { MarkdownModule } from 'ngx-markdown';
 import { AdminService, IpRow, AdminSession, AdminStats, SessionDetail, PagedResult } from '../services/admin.service';
 
 @Component({
   selector: 'app-admin',
-  imports: [CommonModule, DatePipe, NgClass, MarkdownModule],
+  imports: [CommonModule, DatePipe, NgClass, MarkdownModule, RouterLink],
   templateUrl: './admin.component.html',
 })
 export class AdminComponent implements OnInit {
