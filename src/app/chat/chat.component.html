@@ -131,7 +131,7 @@
               <span class="text-[11px] text-white/40 font-mono truncate">{{ formatSources(msg.sources) }}</span>
             </div>
 
-            <div *ngIf="msg.metrics" class="flex items-center gap-2 px-1 text-[11px] text-white/25 font-mono select-none">
+            <div *ngIf="msg.metrics" class="flex items-center gap-2 px-1 text-[11px] text-white/40 font-mono select-none">
               <span>{{ msg.metrics.total_tokens }} tokens</span>
               <span>·</span>
               <span>{{ msg.metrics.inference_time_sec }}s</span>
