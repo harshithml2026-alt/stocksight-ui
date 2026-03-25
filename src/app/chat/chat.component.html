@@ -100,7 +100,8 @@
 
 <!-- Chat scroll area — fixed container between navbar and input bar -->
 <main
-  class="chat-scroll fixed top-[65px] bottom-[80px] left-0 right-0 overflow-y-auto overflow-x-hidden bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 transition-all duration-300"
+  class="chat-scroll fixed top-[65px] left-0 right-0 overflow-y-auto overflow-x-hidden bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 transition-all duration-300"
+  [style.bottom.px]="inputBarHeight"
   [class.sidebar-push]="sidebarOpen"
   (click)="closeMenu()"
 >
@@ -158,14 +159,17 @@
 </main>
 
 <!-- Input bar -->
-<div class="fixed bottom-0 left-0 right-0 z-50 h-[80px] bg-gray-950/90 backdrop-blur-md border-t border-white/10 px-4 py-4 transition-all duration-300"
+<div #inputBar class="fixed bottom-0 left-0 right-0 z-50 bg-gray-950/90 backdrop-blur-md border-t border-white/10 px-4 py-4 transition-all duration-300"
   [class.input-push]="sidebarOpen">
-  <div class="max-w-3xl mx-auto flex items-center gap-3 bg-white/5 border border-white/15 rounded-2xl px-5 py-3 focus-within:border-blue-500 transition-colors">
+  <div class="max-w-3xl mx-auto flex items-end gap-3 bg-white/5 border border-white/15 rounded-2xl px-5 py-3 focus-within:border-blue-500 transition-colors">
     <textarea
+      #textarea
       rows="1"
       placeholder="Ask a follow-up question..."
-      class="flex-1 bg-transparent text-white placeholder-gray-500 text-sm outline-none resize-none leading-relaxed"
+      class="flex-1 bg-transparent text-white placeholder-gray-500 text-sm outline-none resize-none leading-relaxed overflow-y-auto"
+      style="max-height: 160px;"
       [(ngModel)]="input"
+      (input)="autoResize()"
       (keydown)="onKeydown($event)"
     ></textarea>
     <button

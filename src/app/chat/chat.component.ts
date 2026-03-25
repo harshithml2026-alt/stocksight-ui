@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, HostListener } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgFor, NgIf, DatePipe, Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -29,6 +29,10 @@ interface Message {
 })
 export class ChatComponent implements OnInit {
   @ViewChild('messagesEnd') messagesEnd!: ElementRef;
+  @ViewChild('inputBar') inputBar!: ElementRef;
+  @ViewChild('textarea') textareaRef!: ElementRef<HTMLTextAreaElement>;
+
+  inputBarHeight = 80;
 
   sessionId: string;
   messages: Message[] = [];
@@ -92,10 +96,29 @@ export class ChatComponent implements OnInit {
     });
   }
 
+  autoResize() {
+    const el = this.textareaRef?.nativeElement;
+    if (!el) return;
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 160) + 'px';
+    setTimeout(() => this.updateInputBarHeight());
+  }
+
+  private updateInputBarHeight() {
+    const el = this.inputBar?.nativeElement;
+    if (el) this.inputBarHeight = el.offsetHeight;
+  }
+
   send() {
     if (!this.input.trim() || this.isTyping) return;
     const question = this.input.trim();
     this.input = '';
+    // Reset textarea height after clearing
+    setTimeout(() => {
+      const el = this.textareaRef?.nativeElement;
+      if (el) el.style.height = 'auto';
+      this.updateInputBarHeight();
+    });
     this.sendQuestion(question);
   }
 
