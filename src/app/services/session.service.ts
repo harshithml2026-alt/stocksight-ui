@@ -20,6 +20,7 @@ export interface ChatMessage {
   content: string;
   timestamp: string;
   sources?: Source[];
+  metrics?: Metrics;
 }
 
 export interface SessionDetail extends Session {

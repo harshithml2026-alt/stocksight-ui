@@ -84,6 +84,7 @@ export class ChatComponent implements OnInit {
           role: m.role === 'assistant' ? 'ai' : 'user',
           text: m.content,
           sources: m.sources ?? [],
+          metrics: m.metrics,
         }));
         this.scrollToBottom();
       },
