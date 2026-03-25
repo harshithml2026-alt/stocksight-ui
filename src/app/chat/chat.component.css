@@ -1,10 +1,14 @@
+:host {
+  display: block;
+}
+
 .sidebar { transform: translateX(0); }
 .sidebar-hidden { transform: translateX(-100%); }
 
-/* Only push content on desktop */
+/* Shift fixed panels right when sidebar is open — desktop only */
 @media (min-width: 768px) {
-  .sidebar-push { margin-left: 256px; }
-  .input-push { left: 256px; }
+  .sidebar-push { left: 256px; }
+  .input-push   { left: 256px; }
 }
 
 .menu-btn { opacity: 0; }

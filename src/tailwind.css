@@ -1,2 +1,18 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+
+html, body {
+  background-color: #030712; /* gray-950 */
+}
+
+/* Prevent markdown code blocks from overflowing the layout */
+.prose pre {
+  overflow-x: auto;
+  max-width: 100%;
+  white-space: pre;
+}
+
+.prose * {
+  max-width: 100%;
+  word-break: break-word;
+}
