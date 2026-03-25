@@ -1,4 +1,4 @@
-# StockSight UI
+# StockSight
 
 A stock market visualization and analysis frontend built with **Angular 19** and **Tailwind CSS v4**.
 
