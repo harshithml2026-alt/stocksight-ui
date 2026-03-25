@@ -182,8 +182,9 @@ export class ChatComponent implements OnInit {
       const m = src.metadata;
       const ticker  = m['ticker'] || m['company'] || '';
       const filing  = m['filing_type'] || m['form_type'] || '';
-      const rawDate = m['period_of_report'] || m['date'] || '';
-      const year    = rawDate ? rawDate.toString().slice(0, 4) : '';
+      const rawDate = m['period_of_report'] || m['filed_at'] || m['report_date'] || m['date'] || m['year'] || '';
+      const yearMatch = rawDate.toString().match(/\d{4}/);
+      const year = yearMatch ? yearMatch[0] : '';
       const label   = [ticker, filing, year].filter(Boolean).join(' ');
       if (label && !seen.has(label)) {
         seen.add(label);
