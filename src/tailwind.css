@@ -5,6 +5,12 @@ html, body {
   background-color: #030712; /* gray-950 */
 }
 
+.brand {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
 /* Prevent markdown code blocks from overflowing the layout */
 .prose pre {
   overflow-x: auto;
