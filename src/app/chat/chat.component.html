@@ -13,6 +13,13 @@
   <span class="text-xs text-gray-500 font-mono hidden sm:block">{{ sessionId }}</span>
 </header>
 
+<!-- Mobile sidebar backdrop -->
+<div
+  *ngIf="sidebarOpen"
+  class="fixed inset-0 z-30 bg-black/60 md:hidden"
+  (click)="sidebarOpen = false"
+></div>
+
 <!-- Layout -->
 <div class="flex min-h-screen pt-[65px] bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950" (click)="closeMenu()">
 
@@ -96,7 +103,7 @@
 
   <!-- Chat area -->
   <div class="flex-1 flex flex-col transition-all duration-300"
-    [class.ml-64]="sidebarOpen">
+    [class.sidebar-push]="sidebarOpen">
 
     <!-- Messages -->
     <div class="flex-1 w-full max-w-3xl mx-auto px-4 py-6 flex flex-col gap-6 pb-32">
@@ -147,7 +154,7 @@
 
 <!-- Input bar -->
 <div class="fixed bottom-0 left-0 right-0 z-50 bg-gray-950/90 backdrop-blur-md border-t border-white/10 px-4 py-4 transition-all duration-300"
-  [class.sm:left-64]="sidebarOpen">
+  [class.input-push]="sidebarOpen">
   <div class="max-w-3xl mx-auto flex items-center gap-3 bg-white/5 border border-white/15 rounded-2xl px-5 py-3 focus-within:border-blue-500 transition-colors">
     <textarea
       rows="1"

@@ -33,7 +33,7 @@ export class ChatComponent implements OnInit {
   messages: Message[] = [];
   input = '';
   isTyping = false;
-  sidebarOpen = true;
+  sidebarOpen = window.innerWidth >= 768;
   sessions: Session[] = [];
   activeMenu: string | null = null;
 
@@ -134,6 +134,7 @@ export class ChatComponent implements OnInit {
   }
 
   openSession(id: string) {
+    this.sidebarOpen = false;
     this.router.navigate(['/chat', id]);
   }
 

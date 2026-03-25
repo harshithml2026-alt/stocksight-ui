@@ -57,10 +57,12 @@ export class AdminService {
     return this.http.get<AdminStats>(`${API}/admin/stats`);
   }
 
-  getIps(page: number, pageSize: number): Observable<PagedResult<IpRow>> {
+  getIps(page: number, pageSize: number, sortBy: string, sortDir: string): Observable<PagedResult<IpRow>> {
     const params = new HttpParams()
       .set('page', page)
-      .set('page_size', pageSize);
+      .set('page_size', pageSize)
+      .set('sort_by', sortBy)
+      .set('sort_dir', sortDir);
     return this.http.get<PagedResult<IpRow>>(`${API}/admin/sessions`, { params });
   }
 

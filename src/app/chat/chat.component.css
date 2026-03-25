@@ -1,6 +1,12 @@
 .sidebar { transform: translateX(0); }
 .sidebar-hidden { transform: translateX(-100%); }
 
+/* Only push content on desktop */
+@media (min-width: 768px) {
+  .sidebar-push { margin-left: 256px; }
+  .input-push { left: 256px; }
+}
+
 .menu-btn { opacity: 0; }
 .group:hover .menu-btn,
 .menu-btn.text-white { opacity: 1; }

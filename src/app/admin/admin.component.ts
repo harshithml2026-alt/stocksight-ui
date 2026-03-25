@@ -17,6 +17,8 @@ export class AdminComponent implements OnInit {
   ipTotal = 0;
   ipTotalPages = 1;
   ipLoading = false;
+  sortBy = 'last_active';
+  sortDir = 'desc';
   locationMap: Record<string, string> = {};
   locationLoading = false;
 
@@ -42,9 +44,20 @@ export class AdminComponent implements OnInit {
     this.adminService.getStats().subscribe(s => this.stats = s);
   }
 
+  sortBy2(field: string) {
+    if (this.sortBy === field) {
+      this.sortDir = this.sortDir === 'desc' ? 'asc' : 'desc';
+    } else {
+      this.sortBy = field;
+      this.sortDir = 'desc';
+    }
+    this.ipPage = 1;
+    this.loadIps();
+  }
+
   loadIps() {
     this.ipLoading = true;
-    this.adminService.getIps(this.ipPage, this.ipPageSize).subscribe(res => {
+    this.adminService.getIps(this.ipPage, this.ipPageSize, this.sortBy, this.sortDir).subscribe(res => {
       this.ips = res.items;
       this.ipTotal = res.total;
       this.ipTotalPages = res.total_pages;

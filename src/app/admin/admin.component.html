@@ -1,33 +1,34 @@
 <!-- Navbar -->
-<header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4 bg-black/60 backdrop-blur-md border-b border-white/10">
+<header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 sm:px-8 py-4 bg-black/60 backdrop-blur-md border-b border-white/10">
   <span class="text-white text-xl font-bold tracking-wide">
     StockSight <span class="text-xs text-gray-500 font-normal ml-2">Admin</span>
   </span>
 </header>
 
-<main class="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 pt-20 px-8 pb-12">
+<main class="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 pt-20 px-4 sm:px-8 pb-12">
 
   <!-- Stats -->
-  <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8" *ngIf="stats">
-    <div class="bg-white/5 border border-white/10 rounded-2xl px-5 py-4">
+  <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8" *ngIf="stats">
+    <div class="bg-white/5 border border-white/10 rounded-2xl px-4 py-3 sm:px-5 sm:py-4">
       <p class="text-gray-500 text-xs mb-1">Total Sessions</p>
-      <p class="text-white text-2xl font-bold">{{ stats.total_sessions }}</p>
+      <p class="text-white text-xl sm:text-2xl font-bold">{{ stats.total_sessions }}</p>
     </div>
-    <div class="bg-white/5 border border-white/10 rounded-2xl px-5 py-4">
+    <div class="bg-white/5 border border-white/10 rounded-2xl px-4 py-3 sm:px-5 sm:py-4">
       <p class="text-gray-500 text-xs mb-1">Unique IPs</p>
-      <p class="text-blue-400 text-2xl font-bold">{{ stats.total_ips }}</p>
+      <p class="text-blue-400 text-xl sm:text-2xl font-bold">{{ stats.total_ips }}</p>
     </div>
-    <div class="bg-white/5 border border-white/10 rounded-2xl px-5 py-4">
+    <div class="bg-white/5 border border-white/10 rounded-2xl px-4 py-3 sm:px-5 sm:py-4">
       <p class="text-gray-500 text-xs mb-1">Active Sessions</p>
-      <p class="text-green-400 text-2xl font-bold">{{ stats.active_sessions }}</p>
+      <p class="text-green-400 text-xl sm:text-2xl font-bold">{{ stats.active_sessions }}</p>
     </div>
-    <div class="bg-white/5 border border-white/10 rounded-2xl px-5 py-4">
+    <div class="bg-white/5 border border-white/10 rounded-2xl px-4 py-3 sm:px-5 sm:py-4">
       <p class="text-gray-500 text-xs mb-1">Archived</p>
-      <p class="text-gray-400 text-2xl font-bold">{{ stats.archived_sessions }}</p>
+      <p class="text-gray-400 text-xl sm:text-2xl font-bold">{{ stats.archived_sessions }}</p>
     </div>
   </div>
 
-  <div class="flex gap-6">
+  <!-- Main layout: stacked on mobile, side-by-side on large screens -->
+  <div class="flex flex-col lg:flex-row gap-6">
 
     <!-- IP Table -->
     <div class="flex-1 min-w-0">
@@ -38,42 +39,57 @@
 
       <div class="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
 
-        <!-- Loading -->
         <div *ngIf="ipLoading" class="flex items-center justify-center py-16 text-gray-500 text-sm">
           Loading...
         </div>
 
-        <!-- Table -->
-        <table *ngIf="!ipLoading" class="w-full text-sm">
-          <thead>
-            <tr class="border-b border-white/10 text-gray-500 text-xs uppercase tracking-wide">
-              <th class="text-left px-5 py-3">IP Address</th>
-              <th class="text-left px-5 py-3">Location</th>
-              <th class="text-right px-5 py-3">Sessions</th>
-              <th class="text-right px-5 py-3">First Seen</th>
-              <th class="text-right px-5 py-3">Last Active</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              *ngFor="let row of ips"
-              (click)="selectIp(row.ip_address)"
-              class="border-b border-white/5 cursor-pointer transition-colors hover:bg-white/5"
-              [ngClass]="selectedIp === row.ip_address ? 'bg-blue-600/10 border-blue-500/20' : ''"
-            >
-              <td class="px-5 py-3 font-mono text-blue-300">{{ row.ip_address }}</td>
-              <td class="px-5 py-3 text-gray-300 text-sm">
-                <span *ngIf="locationMap[row.ip_address]">{{ locationMap[row.ip_address] }}</span>
-                <span *ngIf="!locationMap[row.ip_address]" class="text-gray-600 text-xs">resolving...</span>
-              </td>
-              <td class="px-5 py-3 text-right text-white font-medium">{{ row.session_count }}</td>
-              <td class="px-5 py-3 text-right text-gray-400">{{ formatDate(row.first_seen) }}</td>
-              <td class="px-5 py-3 text-right text-gray-400">{{ timeAgo(row.last_active) }}</td>
-            </tr>
-          </tbody>
-        </table>
+        <!-- Scrollable table wrapper for small screens -->
+        <div *ngIf="!ipLoading" class="overflow-x-auto">
+          <table class="w-full text-sm min-w-[680px]">
+            <thead>
+              <tr class="border-b border-white/10 text-gray-500 text-xs uppercase tracking-wide">
+                <th class="text-left px-4 py-3">IP Address</th>
+                <th class="text-left px-4 py-3">Location</th>
+                <th class="text-right px-4 py-3">
+                  <button (click)="sortBy2('session_count')" class="flex items-center gap-1 ml-auto hover:text-white transition-colors">
+                    Sessions
+                    <span class="text-[10px]">{{ sortBy === 'session_count' ? (sortDir === 'desc' ? '↓' : '↑') : '↕' }}</span>
+                  </button>
+                </th>
+                <th class="text-right px-4 py-3">
+                  <button (click)="sortBy2('first_seen')" class="flex items-center gap-1 ml-auto hover:text-white transition-colors">
+                    First Seen
+                    <span class="text-[10px]">{{ sortBy === 'first_seen' ? (sortDir === 'desc' ? '↓' : '↑') : '↕' }}</span>
+                  </button>
+                </th>
+                <th class="text-right px-4 py-3">
+                  <button (click)="sortBy2('last_active')" class="flex items-center gap-1 ml-auto hover:text-white transition-colors">
+                    Last Active
+                    <span class="text-[10px]">{{ sortBy === 'last_active' ? (sortDir === 'desc' ? '↓' : '↑') : '↕' }}</span>
+                  </button>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let row of ips"
+                (click)="selectIp(row.ip_address)"
+                class="border-b border-white/5 cursor-pointer transition-colors hover:bg-white/5"
+                [ngClass]="selectedIp === row.ip_address ? 'bg-blue-600/10 border-blue-500/20' : ''"
+              >
+                <td class="px-4 py-3 font-mono text-blue-300 text-xs whitespace-nowrap">{{ row.ip_address }}</td>
+                <td class="px-4 py-3 text-gray-300 text-xs whitespace-nowrap">
+                  <span *ngIf="locationMap[row.ip_address]">{{ locationMap[row.ip_address] }}</span>
+                  <span *ngIf="!locationMap[row.ip_address]" class="text-gray-600">resolving...</span>
+                </td>
+                <td class="px-4 py-3 text-right text-white font-medium text-xs whitespace-nowrap">{{ row.session_count }}</td>
+                <td class="px-4 py-3 text-right text-gray-400 text-xs whitespace-nowrap">{{ formatDate(row.first_seen) }}</td>
+                <td class="px-4 py-3 text-right text-gray-400 text-xs whitespace-nowrap">{{ timeAgo(row.last_active) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-        <!-- Empty -->
         <div *ngIf="!ipLoading && ips.length === 0" class="text-center py-16 text-gray-500 text-sm">
           No sessions found.
         </div>
@@ -97,14 +113,14 @@
       </div>
     </div>
 
-    <!-- Sessions Panel -->
-    <div class="w-96 shrink-0" *ngIf="selectedIp">
+    <!-- Sessions Panel: full width on mobile, fixed width on large screens -->
+    <div class="w-full lg:w-96 lg:shrink-0" *ngIf="selectedIp">
       <div class="flex items-center justify-between mb-3">
         <h2 class="text-white font-semibold text-sm truncate">
           <span class="text-gray-500 font-normal">Sessions for </span>
           <span class="font-mono text-blue-300">{{ selectedIp }}</span>
         </h2>
-        <button (click)="selectIp(selectedIp)" class="text-gray-500 hover:text-white transition-colors text-lg leading-none">×</button>
+        <button (click)="selectIp(selectedIp!)" class="text-gray-500 hover:text-white transition-colors text-lg leading-none ml-2 shrink-0">×</button>
       </div>
 
       <div class="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
@@ -159,19 +175,17 @@
 <!-- Session Chat Modal -->
 <div
   *ngIf="openedSession || sessionDetailLoading"
-  class="fixed inset-0 z-50 flex items-center justify-center px-4"
+  class="fixed inset-0 z-50 flex items-end sm:items-center justify-center"
   (click)="closeSession()"
 >
-  <!-- Backdrop -->
   <div class="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
 
-  <!-- Panel -->
   <div
-    class="relative z-10 w-full max-w-2xl max-h-[85vh] bg-gray-900 border border-white/10 rounded-2xl flex flex-col shadow-2xl"
+    class="relative z-10 w-full sm:max-w-2xl max-h-[90vh] sm:max-h-[85vh] bg-gray-900 border border-white/10 sm:rounded-2xl rounded-t-2xl flex flex-col shadow-2xl"
     (click)="$event.stopPropagation()"
   >
     <!-- Header -->
-    <div class="flex items-center justify-between px-5 py-4 border-b border-white/10 shrink-0">
+    <div class="flex items-center justify-between px-4 sm:px-5 py-4 border-b border-white/10 shrink-0">
       <div class="flex flex-col gap-0.5 min-w-0">
         <p class="text-white text-sm font-medium truncate">{{ openedSession?.preview }}</p>
         <p class="text-gray-500 text-xs font-mono">{{ openedSession?.ip_address }} · {{ openedSession ? formatDate(openedSession.createdAt) : '' }}</p>
@@ -179,21 +193,18 @@
       <button (click)="closeSession()" class="text-gray-500 hover:text-white transition-colors text-xl leading-none ml-4 shrink-0">×</button>
     </div>
 
-    <!-- Loading -->
     <div *ngIf="sessionDetailLoading" class="flex items-center justify-center py-16 text-gray-500 text-sm">
       Loading...
     </div>
 
     <!-- Messages -->
-    <div *ngIf="openedSession && !sessionDetailLoading" class="flex-1 overflow-y-auto px-5 py-4 flex flex-col gap-4">
-
+    <div *ngIf="openedSession && !sessionDetailLoading" class="flex-1 overflow-y-auto px-4 sm:px-5 py-4 flex flex-col gap-4">
       <div *ngIf="openedSession.messages.length === 0" class="text-center text-gray-500 text-sm py-8">
         No messages in this session.
       </div>
-
       <div *ngFor="let msg of openedSession.messages" class="flex" [ngClass]="msg.role === 'user' ? 'justify-end' : 'justify-start'">
         <div
-          class="max-w-[80%] px-4 py-3 rounded-2xl text-sm"
+          class="max-w-[85%] sm:max-w-[80%] px-4 py-3 rounded-2xl text-sm"
           [ngClass]="msg.role === 'user'
             ? 'bg-blue-600 text-white rounded-br-sm'
             : 'bg-white/5 border border-white/10 text-gray-200 rounded-bl-sm'"
