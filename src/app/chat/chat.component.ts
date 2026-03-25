@@ -4,7 +4,7 @@ import { NgFor, NgIf, DatePipe, Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { skip } from 'rxjs';
 import { MarkdownComponent } from 'ngx-markdown';
-import { SessionService, Session } from '../services/session.service';
+import { SessionService, Session, Source } from '../services/session.service';
 
 interface Metrics {
   total_tokens: number;
@@ -18,6 +18,7 @@ interface Message {
   role: 'user' | 'ai';
   text: string;
   metrics?: Metrics;
+  sources?: Source[];
 }
 
 @Component({
@@ -82,6 +83,7 @@ export class ChatComponent implements OnInit {
         this.messages = detail.messages.map((m) => ({
           role: m.role === 'assistant' ? 'ai' : 'user',
           text: m.content,
+          sources: m.sources ?? [],
         }));
         this.scrollToBottom();
       },
@@ -119,7 +121,7 @@ export class ChatComponent implements OnInit {
             this.loadSessions();
           }
           this.isTyping = false;
-          this.messages.push({ role: 'ai', text: res.answer, metrics: res.metrics ?? undefined });
+          this.messages.push({ role: 'ai', text: res.answer, metrics: res.metrics ?? undefined, sources: res.sources ?? [] });
           this.scrollToBottom();
         },
         error: () => {
@@ -171,6 +173,16 @@ export class ChatComponent implements OnInit {
 
   goHome() {
     this.router.navigate(['/']);
+  }
+
+  formatSource(source: Source): string {
+    const m = source.metadata;
+    const ticker   = m['ticker'] || m['company'] || '';
+    const filing   = m['filing_type'] || m['form_type'] || '';
+    const period   = m['period_of_report'] || m['date'] || '';
+    const section  = m['section'] || '';
+    const parts = [ticker, filing, period, section].filter(Boolean);
+    return parts.length ? parts.join(' · ') : source.id;
   }
 
   private scrollToBottom() {

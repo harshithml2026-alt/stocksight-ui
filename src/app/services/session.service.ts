@@ -9,10 +9,17 @@ export interface Session {
   createdAt: number;
 }
 
+export interface Source {
+  id: string;
+  score: number;
+  metadata: Record<string, any>;
+}
+
 export interface ChatMessage {
   role: 'user' | 'assistant';
   content: string;
   timestamp: string;
+  sources?: Source[];
 }
 
 export interface SessionDetail extends Session {
@@ -32,7 +39,7 @@ export interface Metrics {
 export interface ChatResponse {
   session_id: string;
   answer: string;
-  sources: any[];
+  sources: Source[];
   metrics?: Metrics;
 }
 

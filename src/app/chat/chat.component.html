@@ -124,6 +124,18 @@
             <div class="bg-white/5 border border-white/10 text-gray-200 text-sm px-5 py-3 rounded-2xl rounded-tl-sm shadow-lg prose prose-invert prose-sm max-w-none">
               <markdown [data]="msg.text" />
             </div>
+            <!-- SEC Sources -->
+            <div *ngIf="msg.sources && msg.sources.length > 0"
+              class="mt-1 bg-white/[0.04] border border-white/[0.07] rounded-xl px-3 py-2.5 flex flex-col gap-1.5">
+              <p class="text-[10px] text-white/30 uppercase tracking-widest font-medium">SEC Sources</p>
+              <div class="flex flex-col gap-1">
+                <div *ngFor="let src of msg.sources" class="flex items-center justify-between gap-3">
+                  <span class="text-[11px] text-white/50 leading-relaxed">{{ formatSource(src) }}</span>
+                  <span class="text-[10px] text-white/25 font-mono shrink-0">{{ (src.score * 100).toFixed(0) }}%</span>
+                </div>
+              </div>
+            </div>
+
             <div *ngIf="msg.metrics" class="flex items-center gap-2 px-1 text-[11px] text-white/25 font-mono select-none">
               <span>{{ msg.metrics.total_tokens }} tokens</span>
               <span>·</span>
