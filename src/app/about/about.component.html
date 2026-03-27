@@ -3,6 +3,7 @@
   <button (click)="goHome()" class="brand text-white text-xl hover:text-blue-400 transition-colors">StockSight</button>
   <nav class="flex items-center gap-8">
     <a routerLink="/about" class="text-sm text-white font-medium transition-colors">About</a>
+    <a routerLink="/hood" class="text-sm text-gray-300 hover:text-white transition-colors">Under the Hood</a>
   </nav>
 </header>
 
@@ -35,37 +36,6 @@
       </div>
     </div>
 
-    <div class="flex flex-col gap-4 text-left">
-      <h2 class="text-xl font-bold text-white">How It Works</h2>
-      <div class="w-full rounded-2xl overflow-hidden border border-white/10 bg-[#0f0f0f] p-4 cursor-zoom-in" (click)="openDiagram()">
-        <img src="architecture.svg" alt="StockSight Architecture Diagram" class="w-full h-auto pointer-events-none" />
-      </div>
-    </div>
-
-    <!-- Diagram lightbox -->
-    @if (diagramOpen) {
-      <div
-        class="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center overflow-hidden touch-none"
-        [class.cursor-grab]="!isDragging"
-        [class.cursor-grabbing]="isDragging"
-        (click)="onBackdropClick()"
-        (mousedown)="onMouseDown($event)"
-        (wheel)="onWheel($event)"
-        (touchstart)="onTouchStart($event)"
-        (touchmove)="onTouchMove($event)"
-        (touchend)="onTouchEnd()"
-      >
-        <button class="absolute top-4 right-5 text-white/60 hover:text-white text-3xl leading-none z-10" (click)="closeDiagram(); $event.stopPropagation()">&#x2715;</button>
-        <img
-          src="architecture.svg"
-          alt="StockSight Architecture Diagram"
-          class="select-none max-w-full max-h-full object-contain pointer-events-none"
-          [style.transform]="imgTransform"
-          [style.transform-origin]="'center center'"
-          [style.transition]="imgTransition"
-        />
-      </div>
-    }
 
 <div class="flex flex-col items-center gap-2 border-t border-white/10 pt-8">
       <p class="text-gray-500 text-sm">Built by Harshith — feel free to reach out</p>
