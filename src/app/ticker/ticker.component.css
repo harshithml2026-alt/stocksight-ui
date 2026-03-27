@@ -3,8 +3,10 @@
   opacity: 0.8;
 }
 
+/* Mobile: scroll */
 .ticker-track {
-  animation: marquee 20s linear infinite;
+  width: max-content;
+  animation: marquee 18s linear infinite;
 }
 
 .ticker-track:hover {
@@ -14,4 +16,17 @@
 @keyframes marquee {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
+}
+
+/* Desktop: static centered, hide duplicates */
+@media (min-width: 900px) {
+  .ticker-track {
+    width: 100%;
+    animation: none;
+    justify-content: center;
+  }
+
+  .ticker-duplicate {
+    display: none;
+  }
 }
