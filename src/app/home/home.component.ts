@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -12,6 +12,7 @@ import { SessionService } from '../services/session.service';
   templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnInit {
+  @ViewChild('searchBox') searchBoxRef!: ElementRef<HTMLTextAreaElement>;
   query = '';
 
   placeholder = [
@@ -42,6 +43,11 @@ export class HomeComponent implements OnInit {
     if (!this.query.trim()) return;
     const sessionId = crypto.randomUUID();
     this.router.navigate(['/chat', sessionId], { state: { query: this.query.trim() } });
+  }
+
+  fillSuggestion(text: string) {
+    this.query = text;
+    setTimeout(() => this.autoResize(this.searchBoxRef.nativeElement), 0);
   }
 
   autoResize(el: HTMLTextAreaElement) {
