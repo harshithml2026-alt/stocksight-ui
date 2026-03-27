@@ -1,16 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { TickerComponent } from '../ticker/ticker.component';
 import { SUGGESTIONS } from './suggestions';
+import { SessionService } from '../services/session.service';
 
 @Component({
   selector: 'app-home',
   imports: [FormsModule, NgFor, RouterLink, TickerComponent],
   templateUrl: './home.component.html',
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   query = '';
 
   placeholder = [
@@ -31,7 +32,11 @@ export class HomeComponent {
     .sort(() => Math.random() - 0.5)
     .slice(0, 3);
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private session: SessionService) {}
+
+  ngOnInit() {
+    this.session.getSessions().subscribe({ error: () => {} });
+  }
 
   ask() {
     if (!this.query.trim()) return;
