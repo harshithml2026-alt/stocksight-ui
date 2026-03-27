@@ -33,6 +33,7 @@ export class AdminComponent implements OnInit {
 
   openedSession: SessionDetail | null = null;
   sessionDetailLoading = false;
+  confirmDeleteId: string | null = null;
 
   constructor(private adminService: AdminService) {}
 
@@ -119,6 +120,27 @@ export class AdminComponent implements OnInit {
 
   closeSession() {
     this.openedSession = null;
+  }
+
+  promptDelete(id: string, event: Event) {
+    event.stopPropagation();
+    this.confirmDeleteId = id;
+  }
+
+  cancelDelete(event: Event) {
+    event.stopPropagation();
+    this.confirmDeleteId = null;
+  }
+
+  confirmDelete(id: string, event: Event) {
+    event.stopPropagation();
+    this.adminService.deleteSession(id).subscribe(() => {
+      this.confirmDeleteId = null;
+      this.sessions = this.sessions.filter(s => s.id !== id);
+      this.sessionTotal--;
+      if (this.openedSession?.id === id) this.openedSession = null;
+      this.loadStats();
+    });
   }
 
   formatDate(ms: number): string {

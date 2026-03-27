@@ -82,4 +82,8 @@ export class AdminService {
       .set('page_size', pageSize);
     return this.http.get<PagedResult<AdminSession>>(`${API}/admin/sessions/by-ip`, { params });
   }
+
+  deleteSession(id: string): Observable<void> {
+    return this.http.delete<void>(`${API}/chat/sessions/${id}`);
+  }
 }
