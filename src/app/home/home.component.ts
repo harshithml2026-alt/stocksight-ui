@@ -39,7 +39,15 @@ export class HomeComponent {
     this.router.navigate(['/chat', sessionId], { state: { query: this.query.trim() } });
   }
 
+  autoResize(el: HTMLTextAreaElement) {
+    el.style.height = 'auto';
+    el.style.height = el.scrollHeight + 'px';
+  }
+
   onKeydown(event: KeyboardEvent) {
-    if (event.key === 'Enter') this.ask();
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      this.ask();
+    }
   }
 }
